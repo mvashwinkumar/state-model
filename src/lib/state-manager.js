@@ -1,11 +1,14 @@
 import {Diff} from './diff'
+import {CircularQueue} from './circular-queue'
 
 export class Manager {
-    constructor(obj) {
+    constructor(obj, opts) {
         let initialDiff = new Diff(null, obj);
-        this.lastSavedModel = obj;
         this.currentModel = obj;
-        this.diffs = [];
-        this.diffs.push(initialDiff);
+        this.dcq = new CircularQueue([initialDiff], opts);
+    }
+
+    getState(num) {
+        return this.dcq.peek(num);
     }
 }

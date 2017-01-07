@@ -54,12 +54,18 @@ describe('Diff Module', function() {
         let d34 = new Diff(obj3, obj4);
         let d14 = new Diff(obj1, obj4);
 
+        d23.mergeNext(d34);
         d12.mergeNext(d23);
-        d12.mergeNext(d34);
 
         expect(d12.added()).deep.equal(d14.added());
         expect(Object.keys(d12.deleted())).deep.equal(Object.keys(d14.deleted()));
-        expect(d12.modified()).deep.equal(d14.modified());
+
+        Object.keys(d12.modified()).forEach((key) => {
+            let d12Obj = d12.modified()[key];
+            let d14Obj = d14.modified()[key];
+            expect(d14Obj).exist;
+            expect(d14Obj.n).deep.equal(d12Obj.n);
+        });
     })
     it('reset diff', function() {
         let obj1 = {'a':'b'};

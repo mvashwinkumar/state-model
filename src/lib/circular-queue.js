@@ -117,6 +117,14 @@ export class CircularQueue {
         }
     }
 
+    peek(num) {
+        if(num > 0) {
+            return false;
+        }
+        let ptr = _resolvePtr(this.topPtr + num, this.opts[OPTIONS.MAXSIZE.OPT]);
+        return _.cloneDeep(this.data[ptr]);
+    }
+
     find(key) {
         // returns the reference to the data instance with matching key as defined in options
         return _.find(this.data, (obj) => key === obj[this.opts[OPTIONS.KEY.OPT]]);
